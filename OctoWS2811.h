@@ -127,6 +127,10 @@ public:
 	uint32_t Color(uint8_t red, uint8_t green, uint8_t blue, uint8_t white) {
 		return (white << 24) | (red << 16) | (green << 8) | blue;
 	}
+	void registerForceBlank(bool& force_blank)
+	{
+		m_force_blank = &force_blank;
+	}
 
 private:
 	static uint16_t stripLen;
@@ -137,6 +141,7 @@ private:
 	static DMAChannel dma1, dma2, dma3;
 	static void isr(void);
 	static uint8_t defaultPinList[8];
+	bool*  m_force_blank;
 };
 
 #endif

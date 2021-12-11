@@ -253,7 +253,14 @@ void OctoWS2811::show(void)
 	// it's ok to copy the drawing buffer to the frame buffer
 	// during the 50us WS2811 reset time
 	if (drawBuffer != frameBuffer) {
-		memcpy(frameBuffer, drawBuffer, numbytes * numpins);
+		if (m_force_blank && *m_force_blank)
+		{
+			memset(frameBuffer, 0, numbytes * numpins);
+		}
+		else
+		{
+			memcpy(frameBuffer, drawBuffer, numbytes * numpins);
+		}
 	}
 
 	// disable timers
