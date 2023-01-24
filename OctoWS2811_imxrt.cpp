@@ -259,7 +259,16 @@ void OctoWS2811::show(void)
 		}
 		else
 		{
-			memcpy(frameBuffer, drawBuffer, numbytes * numpins);
+			//memcpy(frameBuffer, drawBuffer, numbytes * numpins);
+			// swap R and G
+			const uint8_t* s = static_cast<const uint8_t*>(drawBuffer);
+			uint8_t* d = static_cast<uint8_t*>(frameBuffer);
+			for (unsigned k = 0; k < (numbytes*numpins)/3; k++) {
+				uint8_t t = *s++;
+				*d++ = *s++;
+				*d++ = t;
+				*d++ = *s++;
+			}
 		}
 	}
 
